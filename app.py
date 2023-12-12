@@ -1,4 +1,6 @@
 from flask import Flask, render_template, request
+from sqlalchemy import func
+
 from config import ApiConfig
 from db import db
 import requests
@@ -37,7 +39,8 @@ def generate_lyrics():
     if not artist_name or not track_name:
         return render_template('index.html', error='Please provide both artist and track names.')
 
-    song = Song.query.filter_by(artist_name=artist_name, track_name=track_name).first()
+    song = Song.query.filter(func.lower(Song.artist_name) == artist_name.lower(),
+                             func.lower(Song.track_name) == track_name.lower()).first()
 
     if not song:
         lyrics = get_lyrics(artist_name, track_name)
@@ -78,3 +81,4 @@ if __name__ == '__main__':
     with app.app_context():
         db.create_all()
     app.run(host="0.0.0.0", port=5000)
+    

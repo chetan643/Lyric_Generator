@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Lyrics Generator</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            text-align: center;
+            margin: 50px;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            padding: 8px;
+            margin: 5px;
+            width: 200px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        p {
+            color: #FF0000;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 20px;
+        }
+
+        pre {
+            white-space: pre-wrap;
+            background-color: #fff;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            text-align: left;
+            overflow: auto;
+            margin-top: 10px;
+        }
+         button#songs-info:hover{
+            background-color: #2980b9;
+        }
+        button{
+            margin-top: 20px;
+            display: inline;
+            justify-content: space-between;
+        }
+        button + button {
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Music Lyrics Generator</h1>
+    <form action="/generate_lyrics" method="post">
+        <label for="artist_name">Artist Name:</label>
+        <input type="text" id="artist_name" name="artist_name" required>
+        <br>
+        <label for="track_name">Track Name:</label>
+        <input type="text" id="track_name" name="track_name" required>
+        <br>
+        <button type="submit">Generate Lyrics</button>
+        <button id="songs-info" onclick="navigateToSongsInfo()">Songs Search History</button>
+    </form>
+    {% if error %}
+        <p>{{ error }}</p>
+    {% endif %}
+    {% if lyrics %}
+        <h2>Lyrics for {{ artist }} - {{ track }}</h2>
+        <pre>{{ lyrics }}</pre>
+    {% endif %}
+<script>
+    function navigateToSongsInfo() {
+        window.open('/table_data', '_blank');
+    }
+    </script>
+</body>
+</html>
